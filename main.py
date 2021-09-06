@@ -12,20 +12,23 @@ def compare(team1, team2):
     else:
         return 'Remíza!'
 
+player01 = Player(1, 'Leo Messi', 90, 60)
+player02 = Player(2, 'Cristiano Ronaldo', 90, 58)
+player03 = Player(3, 'Pepe', 89, 59)
+player04 = Player(4, 'Diego Maradona', 85, 37)
+player05 = Player(5, 'Philipp Lahm', 61, 88)
+player06 = Player(6, 'Carlos Puyol', 63, 90)
+player07 = Player(7, 'Aymeric Laporte', 60, 78)
+player08 = Player(8, 'Tomáš Řepka', 56, 75,)
+player09 = Player(9, 'Gianluigi Buffon', 45, 89)
+player10 = Player(10, 'Iker Casillas', 40, 83,)
 
-player1 = Player('Leo Messi', 90)
-player2 = Player('Cristiano Ronaldo', 90)
-#print(player1.get_name())
-#print(player1.get_overall_rating())
+team1 = Team("Sparta")
+team2 = Team("Slavie")
 
-sparta = Team("Sparta", player1, player2)
-##print(sparta.get_striker())
-##print(sparta.get_goalkeeper())
-##print(sparta.get_players())
-##print(sparta.get_overall_rating())
+print(team1.add_left_striker(player01))
+print(team1.add_left_striker(player02))
 
-player3 = Player('Robin Van Persie', 90)
-player4 = Player('David Beckham', 90)
-slavie = Team('Slavie', player3, player4)
-
-print(compare(sparta,slavie))
+print(team1.left_striker.name)
+print(team1.del_left_striker())
+print(player02.free)

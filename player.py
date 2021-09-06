@@ -1,10 +1,10 @@
 class Player:
-    def __init__(self, name, overall_rating):
+    def __init__(self, id, name, shot, defense, free = 1):
+        self.id = id
         self.name = name
-        self.overall_rating = overall_rating
+        self.shot = shot
+        self.defense = defense
+        self.free = free
 
-    def get_name(self):
-        return self.name
-
-    def get_overall_rating(self):
-        return self.overall_rating
+    def set_free(self, status):
+        self.free = status
