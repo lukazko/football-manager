@@ -1,11 +1,12 @@
 class Team:
-    def __init__(self, name):
+
+    def __init__(self, name, left_striker = None, right_striker = None, left_defender = None, right_defender = None, goalkeeper = None):
         self.name = name        
-        self.left_striker = None
-        self.right_striker = None
-        self.left_defender = None
-        self.right_defender = None
-        self.goalkeeper = None
+        self.left_striker = left_striker
+        self.right_striker = right_striker
+        self.left_defender = left_defender
+        self.right_defender = right_defender
+        self.goalkeeper = goalkeeper
 
     def get_players(self):
         team = {"left striker": self.left_striker.name,
@@ -24,7 +25,7 @@ class Team:
             self.left_striker.set_free(1)
             self.left_striker = left_striker
             left_striker.set_free(0)
-            return left_striker.name + 'je nový levý útočník.' 
+            return left_striker.name + ' je nový levý útočník.' 
 
     def add_right_striker(self, right_striker):
         if self.right_striker == None:
@@ -57,7 +58,7 @@ class Team:
             self.right_defender.set_free(1)
             self.right_defender = right_defender
             right_defender.set_free(0)
-            return right_defender.name + 'je nový pravý obránce.'             
+            return right_defender.name + ' je nový pravý obránce.'             
     
     def add_goalkeeper(self, goalkeeper):
         if self.goalkeeper == None:
@@ -68,7 +69,7 @@ class Team:
             self.goalkeeper.set_free(1)
             self.goalkeeper = goalkeeper
             goalkeeper.set_free(0)
-            return goalkeeper.name + 'je nový brankář.'  
+            return goalkeeper.name + ' je nový brankář.'  
 
     def del_left_striker(self):
         if self.left_striker == None:
@@ -126,4 +127,10 @@ class Team:
         rd = self.right_defender.defense
         gk = self.goalkeeper.defense + 2 * self.goalkeeper.goalkeeping
 
-        return 0.5 * (ls + rs) + 3 * (ld + rd) + gk 
+        return 0.5 * (ls + rs) + 3 * (ld + rd) + gk
+
+    def is_complete(self):
+        if self.left_defender is not None and self.left_striker is not None and self.right_striker is not None and self.right_defender is not None and self.goalkeeper is not None:
+            return True
+        else:
+            return False     
