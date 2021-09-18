@@ -2,7 +2,7 @@ from PySide6.QtGui import QIcon
 from player import Player
 from team import Team
 from match import Match
-from gui2 import Ui_MainWindow
+from gui2 import Ui_main_window
 from PySide6 import QtWidgets
 from PySide6.QtGui import QPixmap
 
@@ -19,45 +19,25 @@ player10 = Player(10, 'Iker Casillas', 40, 69, 83, 'img/players/casillas.png')
 
 team1 = Team("Sparta")
 
-
-#team1.add_left_striker(player01)
-#team1.add_right_striker(player02)
-#team1.add_right_defender(player07)
-#team1.add_left_defender(player08)
-#team1.add_goalkeeper(player10)
-
-#team2.add_left_striker(player03)
-#team2.add_right_striker(player04)
-#team2.add_right_defender(player05)
-#team2.add_left_defender(player06)
-#team2.add_goalkeeper(player09)
-
-##print(team1.get_players())
-##print(team1.get_offensive_coef())
-##print(team1.get_defensive_coef())
-#match1 = Match(team1, team2)
-#print(match1.play_match())
-#print(match1.play_match())
-
-# Vypsání všech instancí třídy Player
-#for player in Player.get_instances():
-#    print(player.name, player.id)
-
-
 app = QtWidgets.QApplication()
 
 main = QtWidgets.QMainWindow()
 
 err_box = QtWidgets.QMessageBox()
 err_box.setWindowTitle('Chyba')
-err_box.setWindowIcon(QIcon('icon.png'))
+err_box.setWindowIcon(QIcon('img/icon.png'))
 
 msg_box = QtWidgets.QMessageBox()
 msg_box.setWindowTitle('Info')
-msg_box.setWindowIcon(QIcon('icon.png'))
+msg_box.setWindowIcon(QIcon('img/icon.png'))
 
-gui = Ui_MainWindow()
+gui = Ui_main_window()
 gui.setupUi(main)
+
+
+###########################################################
+#  Definice funkcí  
+###########################################################
 
 # Funkce pro přidávání hráčů do týmu skrze tlačítko v gui
 def add_player():
@@ -83,27 +63,27 @@ def add_player():
     # Přiřazení hráče na vybranou pozici
     if gui.radio_ls.isChecked() == True:
         gui.label_left_striker.setText(player_name)
-        gui.label_6.setPixmap(QPixmap(player.img))
+        gui.label_ls_img.setPixmap(QPixmap(player.img))
         msg_box.setText(team1.add_left_striker(player))
         msg_box.exec()
     elif gui.radio_rs.isChecked() == True:
         gui.label_right_striker.setText(player_name) 
-        gui.label_7.setPixmap(QPixmap(player.img))
+        gui.label_rs_img.setPixmap(QPixmap(player.img))
         msg_box.setText(team1.add_right_striker(player))
         msg_box.exec()                  
     elif gui.radio_ld.isChecked() == True:
         gui.label_left_defender.setText(player_name)
-        gui.label_3.setPixmap(QPixmap(player.img))    
+        gui.label_ld_img.setPixmap(QPixmap(player.img))    
         msg_box.setText(team1.add_left_defender(player))
         msg_box.exec()        
     elif gui.radio_rd.isChecked() == True:
         gui.label_right_defender.setText(player_name)
-        gui.label_4.setPixmap(QPixmap(player.img))      
+        gui.label_rd_img.setPixmap(QPixmap(player.img))      
         msg_box.setText(team1.add_right_defender(player))
         msg_box.exec()        
     elif gui.radio_gk.isChecked() == True:
         gui.label_goalkeeper.setText(player_name)
-        gui.label_5.setPixmap(QPixmap(player.img))   
+        gui.label_gk_img.setPixmap(QPixmap(player.img))   
         msg_box.setText(team1.add_goalkeeper(player))
         msg_box.exec()               
     else:
@@ -140,19 +120,81 @@ def set_team2():
     gui.button_set_team2.setEnabled(False)
     # Lze spustit zápas přes tlačítko
     gui.button_play.setEnabled(True)
-    print(team2.get_players())
+    #print(team2.get_players())
+    
+    for value in team2.get_players().values():
+        gui.list_team2_players.addItem(value)    
 
 def play_match():
 
     match1 = Match(team1, team2) 
+
+    # Animace průběhu zápasu
+    completed = 0
+    while completed < 90:
+        completed += 0.00001
+        gui.progress_bar.setValue(completed)
+    
     msg_box.setText(match1.play_match())
     msg_box.exec()   
     gui.label_score.setText(match1.get_score())
     gui.button_play.setEnabled(False)
 
+# Funkce pro restartování hry, vymaže proměnné a nastaví výchozí hodnoty grafických prvků
+def restart():
+    team1 = Team("Sparta")
+    team2 = None
+    match1 = None
+
+    for player in Player.get_instances():
+        player.set_free(1)
+
+    gui.label_left_striker.setText('-')
+    gui.label_ls_img.setPixmap(QPixmap('img/dress.png'))
+    gui.label_right_striker.setText('-')    
+    gui.label_rs_img.setPixmap(QPixmap('img/dress.png'))
+    gui.label_left_defender.setText('-')
+    gui.label_ld_img.setPixmap(QPixmap('img/dress.png'))
+    gui.label_right_defender.setText('-')    
+    gui.label_rd_img.setPixmap(QPixmap('img/dress.png'))
+    gui.label_goalkeeper.setText('-')    
+    gui.label_gk_img.setPixmap(QPixmap('img/dress.png'))
+    gui.label_score.setText('-')
+    gui.label_team2_name.setText('-')
+    gui.team1_name.setText(team1.name)
+
+    gui.button_add.setEnabled(True)
+    gui.button_set_team2.setEnabled(True) 
+    gui.button_play.setEnabled(False)
+    gui.progress_bar.setValue(0)
+
+# Funkce pro změnu jména týmu
+def change_name():
+    new_name = gui.team1_name.text()
+
+    if len(new_name) == 0:
+        err_box.setText("Musíš vyplnit nějaké jméno týmu.")
+        err_box.exec()
+        gui.team1_name.setText(team1.name)
+        return
+    elif new_name == team1.name:
+        msg_box.setText("Nové jméno týmu je stejné, jako to aktuální.")
+        msg_box.exec()
+        return           
+
+    team1.name = new_name
+    msg_box.setText("Jméno týmu změněno.")
+    msg_box.exec()
+
+############################################################################################x
+
+
+# Přiřazení funkcí tlačítkům
 gui.button_add.clicked.connect(add_player)   
 gui.button_set_team2.clicked.connect(set_team2)
 gui.button_play.clicked.connect(play_match)
+gui.button_change_name.clicked.connect(change_name)
+gui.action_restart.triggered.connect(restart)
 
 # Naplnění seznamu hráčů	
 for player in Player.get_instances():
@@ -160,8 +202,10 @@ for player in Player.get_instances():
 
 # Explicitní nastavení předvybraného hráče
 gui.list_players.setCurrentRow(0)
-
+# Po startu aplikace zneaktivnit možnost okamžitě hrát
 gui.button_play.setEnabled(False)
+# Vyplnit výchozí jméno vlastního týmu
+gui.team1_name.setText(team1.name)
 
 main.show()
 app.exec()
