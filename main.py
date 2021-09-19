@@ -129,10 +129,10 @@ def set_team2():
     team2 = Team("FC Řeporyje")
     gui.label_team2_name.setText(team2.name)
     
-    var_max = max(player.shoting for player in Player.get_instances_free())
-    team2.add_left_striker(next(plr for plr in Player.get_instances_free() if plr.shoting == var_max))
-    var_max = max(player.shoting for player in Player.get_instances_free())
-    team2.add_right_striker(next(plr for plr in Player.get_instances_free() if plr.shoting == var_max))
+    var_max = max(player.shooting for player in Player.get_instances_free())
+    team2.add_left_striker(next(plr for plr in Player.get_instances_free() if plr.shooting == var_max))
+    var_max = max(player.shooting for player in Player.get_instances_free())
+    team2.add_right_striker(next(plr for plr in Player.get_instances_free() if plr.shooting == var_max))
     var_max = max(player.defense for player in Player.get_instances_free())
     team2.add_left_defender(next(plr for plr in Player.get_instances_free() if plr.defense == var_max))
     var_max = max(player.defense for player in Player.get_instances_free())
@@ -192,7 +192,11 @@ def restart():
     gui.list_players.clear()
     for player in Player.get_instances():
         gui.list_players.addItem(player.name)
-    gui.list_players.setCurrentRow(0)    
+    gui.list_players.setCurrentRow(0)
+    for i in range(gui.list_players.model().rowCount()):
+        actual_row = gui.list_players.item(i)
+        actual_player = next(plr for plr in Player.get_instances() if plr.name == actual_row.text())
+        actual_row.setToolTip('Střela: ' + str(actual_player.shooting) + '\nBránění: ' + str(actual_player.defense) + '\nChytání: ' + str(actual_player.goalkeeping))    
 
     # Výchozí nastavení tlačítek a progress baru
     gui.button_add.setEnabled(True)
@@ -228,11 +232,19 @@ gui.button_play.clicked.connect(play_match)
 gui.button_change_name.clicked.connect(change_name)
 gui.action_restart.triggered.connect(restart)
 
-# vytvoření hráčů
+
+# Vytvoření hráčů
 create_players()
+
 # Naplnění seznamu hráčů	
 for player in Player.get_instances():
     gui.list_players.addItem(player.name)
+
+# Nastavení tooltipu pro s informacemi o hráči pro každý řádek
+for i in range(gui.list_players.model().rowCount()):
+    actual_row = gui.list_players.item(i)
+    actual_player = next(plr for plr in Player.get_instances() if plr.name == actual_row.text())
+    actual_row.setToolTip('Střela: ' + str(actual_player.shooting) + '\nBránění: ' + str(actual_player.defense) + '\nChytání: ' + str(actual_player.goalkeeping))
 
 # Explicitní nastavení předvybraného hráče
 gui.list_players.setCurrentRow(0)

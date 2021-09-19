@@ -112,11 +112,11 @@ class Team:
             return 'Odstraněn brankář' 
 
     def get_offensive_coef(self):
-        ls = self.left_striker.shoting  
-        rs = self.right_striker.shoting
-        ld = self.left_defender.shoting
-        rd = self.right_defender.shoting
-        gk = self.goalkeeper.shoting
+        ls = self.left_striker.shooting  
+        rs = self.right_striker.shooting
+        ld = self.left_defender.shooting
+        rd = self.right_defender.shooting
+        gk = self.goalkeeper.shooting
 
         return 3 * (ls + rs) + ld + rd + 0.5 * gk
 
