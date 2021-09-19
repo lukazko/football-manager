@@ -3,10 +3,10 @@ import weakref
 class Player:
     _instances = set()
 
-    def __init__(self, id, name, shot, defense, goalkeeping, img, free = 1):
+    def __init__(self, id, name, shoting, defense, goalkeeping, img, free = 1):
         self.id = id
         self.name = name
-        self.shot = shot
+        self.shoting = shoting
         self.defense = defense
         self.goalkeeping = goalkeeping
         self.img = img

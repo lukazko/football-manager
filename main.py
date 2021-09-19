@@ -6,18 +6,8 @@ from gui2 import Ui_main_window
 from PySide6 import QtWidgets
 from PySide6.QtGui import QPixmap
 
-player01 = Player(1, 'Lionel Messi', 90, 60, 23, 'img/players/messi.png')
-player02 = Player(2, 'Cristiano Ronaldo', 90, 58, 26, 'img/players/ronaldo.png')
-player03 = Player(3, 'Thierry Henry', 89, 59, 23, 'img/players/henry.png')
-player04 = Player(4, 'Diego Maradona', 85, 37, 25, 'img/players/maradona.png')
-player05 = Player(5, 'Philipp Lahm', 63, 88, 31, 'img/players/lahm.png')
-player06 = Player(6, 'Carles Puyol', 63, 90, 35, 'img/players/puyol.png')
-player07 = Player(7, 'Thiago Silva', 60, 78, 33, 'img/players/silva.png')
-player08 = Player(8, 'Sergio Ramos', 56, 75, 30, 'img/players/ramos.png')
-player09 = Player(9, 'Gianluigi Buffon', 45, 71, 89, 'img/players/buffon.png')
-player10 = Player(10, 'Iker Casillas', 40, 69, 83, 'img/players/casillas.png')
 
-team1 = Team("Sparta")
+team1 = Team("AC Sparta Praha")
 
 app = QtWidgets.QApplication()
 
@@ -38,6 +28,41 @@ gui.setupUi(main)
 ###########################################################
 #  Definice funkcí  
 ###########################################################
+
+# Funkce pro vytvoření hráčů
+def create_players():
+    
+    global player01
+    global player02
+    global player03
+    global player04
+    global player05
+    global player06
+    global player07
+    global player08
+    global player09
+    global player10
+    global player11
+    global player12
+    global player13
+    global player14
+    global player15
+
+    player01 = Player(1, 'Lionel Messi', 95, 38, 15, 'img/players/messi.png')
+    player02 = Player(2, 'Cristiano Ronaldo', 93, 31, 17, 'img/players/ronaldo.png')
+    player03 = Player(3, 'Thierry Henry', 89, 27, 11, 'img/players/henry.png')
+    player04 = Player(4, 'Diego Maradona', 94, 36, 10, 'img/players/maradona.png')
+    player05 = Player(5, 'Robert Lewandowski', 91, 35, 11, 'img/players/lewandowski.png')
+    player06 = Player(6, 'Pelé', 98, 50, 10, 'img/players/pele.png')
+    player07 = Player(7, 'Philipp Lahm', 56, 88, 11, 'img/players/lahm.png')
+    player08 = Player(8, 'Carles Puyol', 52, 85, 13, 'img/players/puyol.png')
+    player09 = Player(9, 'Thiago Silva', 60, 86, 11, 'img/players/silva.png')
+    player10 = Player(10, 'Sergio Ramos', 69, 88, 10, 'img/players/ramos.png')
+    player11 = Player(11, 'Trent Alexander-Arnold', 74, 81, 13, 'img/players/arnold.png')
+    player12 = Player(12, 'Gerard Piqué', 56, 86, 13, 'img/players/pique.png')
+    player13 = Player(13, 'Gianluigi Buffon', 19, 12, 85, 'img/players/buffon.png')
+    player14 = Player(14, 'Iker Casillas', 14, 16, 79, 'img/players/casillas.png')
+    player15 = Player(15, 'Petr Čech', 14, 15, 82, 'img/players/cech.png')
 
 # Funkce pro přidávání hráčů do týmu skrze tlačítko v gui
 def add_player():
@@ -101,13 +126,13 @@ def set_team2():
 
     # Vytvoření nového týmu a zobrazení jeho jména v GUI
     global team2 
-    team2 = Team("Slavie")
+    team2 = Team("FC Řeporyje")
     gui.label_team2_name.setText(team2.name)
     
-    var_max = max(player.shot for player in Player.get_instances_free())
-    team2.add_left_striker(next(plr for plr in Player.get_instances_free() if plr.shot == var_max))
-    var_max = max(player.shot for player in Player.get_instances_free())
-    team2.add_right_striker(next(plr for plr in Player.get_instances_free() if plr.shot == var_max))
+    var_max = max(player.shoting for player in Player.get_instances_free())
+    team2.add_left_striker(next(plr for plr in Player.get_instances_free() if plr.shoting == var_max))
+    var_max = max(player.shoting for player in Player.get_instances_free())
+    team2.add_right_striker(next(plr for plr in Player.get_instances_free() if plr.shoting == var_max))
     var_max = max(player.defense for player in Player.get_instances_free())
     team2.add_left_defender(next(plr for plr in Player.get_instances_free() if plr.defense == var_max))
     var_max = max(player.defense for player in Player.get_instances_free())
@@ -142,12 +167,11 @@ def play_match():
 
 # Funkce pro restartování hry, vymaže proměnné a nastaví výchozí hodnoty grafických prvků
 def restart():
-    team1 = Team("Sparta")
+    team1 = Team("AC Sparta Praha")
     team2 = None
     match1 = None
 
-    for player in Player.get_instances():
-        player.set_free(1)
+    create_players()
 
     gui.label_left_striker.setText('-')
     gui.label_ls_img.setPixmap(QPixmap('img/dress.png'))
@@ -163,6 +187,14 @@ def restart():
     gui.label_team2_name.setText('-')
     gui.team1_name.setText(team1.name)
 
+    # Vrácení seznamů do původního stavu
+    gui.list_team2_players.clear()
+    gui.list_players.clear()
+    for player in Player.get_instances():
+        gui.list_players.addItem(player.name)
+    gui.list_players.setCurrentRow(0)    
+
+    # Výchozí nastavení tlačítek a progress baru
     gui.button_add.setEnabled(True)
     gui.button_set_team2.setEnabled(True) 
     gui.button_play.setEnabled(False)
@@ -196,6 +228,8 @@ gui.button_play.clicked.connect(play_match)
 gui.button_change_name.clicked.connect(change_name)
 gui.action_restart.triggered.connect(restart)
 
+# vytvoření hráčů
+create_players()
 # Naplnění seznamu hráčů	
 for player in Player.get_instances():
     gui.list_players.addItem(player.name)

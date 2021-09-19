@@ -112,11 +112,11 @@ class Team:
             return 'Odstraněn brankář' 
 
     def get_offensive_coef(self):
-        ls = self.left_striker.shot  
-        rs = self.right_striker.shot
-        ld = self.left_defender.shot
-        rd = self.right_defender.shot
-        gk = self.goalkeeper.shot
+        ls = self.left_striker.shoting  
+        rs = self.right_striker.shoting
+        ld = self.left_defender.shoting
+        rd = self.right_defender.shoting
+        gk = self.goalkeeper.shoting
 
         return 3 * (ls + rs) + ld + rd + 0.5 * gk
 
@@ -127,7 +127,7 @@ class Team:
         rd = self.right_defender.defense
         gk = self.goalkeeper.defense + 2 * self.goalkeeper.goalkeeping
 
-        return 0.5 * (ls + rs) + 3 * (ld + rd) + gk
+        return 0.5 * (ls + rs) + 2 * (ld + rd) + gk
 
     def is_complete(self):
         if self.left_defender is not None and self.left_striker is not None and self.right_striker is not None and self.right_defender is not None and self.goalkeeper is not None:
