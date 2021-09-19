@@ -2,7 +2,7 @@ from PySide6.QtGui import QIcon
 from player import Player
 from team import Team
 from match import Match
-from gui2 import Ui_main_window
+from gui import Ui_main_window
 from PySide6 import QtWidgets
 from PySide6.QtGui import QPixmap
 
@@ -150,6 +150,7 @@ def set_team2():
     for value in team2.get_players().values():
         gui.list_team2_players.addItem(value)    
 
+# Funkce pro vytvoření a odehrání zápasu
 def play_match():
 
     match1 = Match(team1, team2) 
@@ -167,6 +168,18 @@ def play_match():
 
 # Funkce pro restartování hry, vymaže proměnné a nastaví výchozí hodnoty grafických prvků
 def restart():
+
+    # Modální okno s žádostí o potvrzení restartu
+    cnfrm_box = QtWidgets.QMessageBox()
+    cnfrm_box.setWindowTitle('Restartovat hru')
+    cnfrm_box.setWindowIcon(QIcon('img/restart.png'))
+    cnfrm_box.setText('Skutečně chceš hru restartovat?')
+    cnfrm_box.setStandardButtons(cnfrm_box.Yes | cnfrm_box.No)
+    ret_val = cnfrm_box.exec()
+    # Při vybrání možnosti ne, nebo zrušení okna, ukončit funkci
+    if ret_val != cnfrm_box.Yes:
+        return
+
     team1 = Team("AC Sparta Praha")
     team2 = None
     match1 = None
@@ -198,7 +211,7 @@ def restart():
         actual_player = next(plr for plr in Player.get_instances() if plr.name == actual_row.text())
         actual_row.setToolTip('Střela: ' + str(actual_player.shooting) + '\nBránění: ' + str(actual_player.defense) + '\nChytání: ' + str(actual_player.goalkeeping))    
 
-    # Výchozí nastavení tlačítek a progress baru
+    # Výchozí nastavení tlačítek a progress baru    
     gui.button_add.setEnabled(True)
     gui.button_set_team2.setEnabled(True) 
     gui.button_play.setEnabled(False)
@@ -222,7 +235,16 @@ def change_name():
     msg_box.setText("Jméno týmu změněno.")
     msg_box.exec()
 
-############################################################################################x
+# Funkce pro zobrazení about okna
+def show_about():
+    msg_box.setText('Football Manager\nFantasy football game by lukazko\n\nVerze: 0.1.0-alpha\n\n©2021 lukazko')
+    msg_box.exec() 
+
+# Funkce pro zobrazení modálního okna nápovědy
+
+
+############################################################################################
+############################################################################################
 
 
 # Přiřazení funkcí tlačítkům
@@ -231,7 +253,7 @@ gui.button_set_team2.clicked.connect(set_team2)
 gui.button_play.clicked.connect(play_match)
 gui.button_change_name.clicked.connect(change_name)
 gui.action_restart.triggered.connect(restart)
-
+gui.action_about.triggered.connect(show_about)
 
 # Vytvoření hráčů
 create_players()
