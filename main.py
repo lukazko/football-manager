@@ -1,3 +1,7 @@
+###########################################################
+#  Importy tříd a knihoven 
+###########################################################
+
 from PySide6.QtGui import QIcon
 from player import Player
 from team import Team
@@ -5,24 +9,6 @@ from match import Match
 from gui import Ui_main_window
 from PySide6 import QtWidgets
 from PySide6.QtGui import QPixmap
-
-
-team1 = Team("AC Sparta Praha")
-
-app = QtWidgets.QApplication()
-
-main = QtWidgets.QMainWindow()
-
-err_box = QtWidgets.QMessageBox()
-err_box.setWindowTitle('Chyba')
-err_box.setWindowIcon(QIcon('img/icon.png'))
-
-msg_box = QtWidgets.QMessageBox()
-msg_box.setWindowTitle('Info')
-msg_box.setWindowIcon(QIcon('img/icon.png'))
-
-gui = Ui_main_window()
-gui.setupUi(main)
 
 
 ###########################################################
@@ -180,12 +166,16 @@ def restart():
     if ret_val != cnfrm_box.Yes:
         return
 
+    # Přepsání proměnných týmů a utkání
     team1 = Team("AC Sparta Praha")
     team2 = None
     match1 = None
 
-    create_players()
+    # Uvolnění hráčů
+    for player in Player.get_instances():
+        player.set_free(1)
 
+    # Výchozí obrázky a text u jednotlivých pozic v týmu
     gui.label_left_striker.setText('-')
     gui.label_ls_img.setPixmap(QPixmap('img/dress.png'))
     gui.label_right_striker.setText('-')    
@@ -240,12 +230,32 @@ def show_about():
     msg_box.setText('Football Manager\nFantasy football game by lukazko\n\nVerze: 0.1.0-alpha\n\n©2021 lukazko')
     msg_box.exec() 
 
-# Funkce pro zobrazení modálního okna nápovědy
 
 
-############################################################################################
-############################################################################################
+############################################################
+# Tělo programu
+############################################################
 
+# Vytvoření hráčova týmu
+team1 = Team("AC Sparta Praha")
+
+# Vytvoření palikace a hlavního okna
+app = QtWidgets.QApplication()
+main = QtWidgets.QMainWindow()
+
+ # Vytvoření GUI a sestavení v hlavním okně
+gui = Ui_main_window()
+gui.setupUi(main)
+
+# Dialogové okno pro chybové hlášky
+err_box = QtWidgets.QMessageBox()
+err_box.setWindowTitle('Chyba')
+err_box.setWindowIcon(QIcon('img/icon.png'))
+
+# Dialogové okno pro info hlášky
+msg_box = QtWidgets.QMessageBox()
+msg_box.setWindowTitle('Info')
+msg_box.setWindowIcon(QIcon('img/icon.png'))
 
 # Přiřazení funkcí tlačítkům
 gui.button_add.clicked.connect(add_player)   
@@ -262,7 +272,7 @@ create_players()
 for player in Player.get_instances():
     gui.list_players.addItem(player.name)
 
-# Nastavení tooltipu pro s informacemi o hráči pro každý řádek
+# Nastavení tooltipu s informacemi o hráči pro každý řádek
 for i in range(gui.list_players.model().rowCount()):
     actual_row = gui.list_players.item(i)
     actual_player = next(plr for plr in Player.get_instances() if plr.name == actual_row.text())

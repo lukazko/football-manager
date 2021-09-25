@@ -1,19 +1,18 @@
-# -*- coding: utf-8 -*-
+###########################################################
+#  Importy tříd a knihoven 
+###########################################################
 
-################################################################################
-## Form generated from reading UI file 'untitled2.ui'
-##
-## Created by: Qt User Interface Compiler version 6.1.3
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
-from PySide6.QtCore import *  # type: ignore
-from PySide6.QtGui import *  # type: ignore
-from PySide6.QtWidgets import *  # type: ignore
+from PySide6.QtCore import * 
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
 
 
+###########################################################
+#  Definice třídy
+###########################################################
 class Ui_help_window(object):
+
+    # Metoda pro sestavení GUI    
     def setupUi(self, help_window):
         if not help_window.objectName():
             help_window.setObjectName(u"help_window")
@@ -45,6 +44,7 @@ class Ui_help_window(object):
         QMetaObject.connectSlotsByName(help_window)
     # setupUi
 
+    # Metoda pro zakódování textu
     def retranslateUi(self, help_window):
         help_window.setWindowTitle(QCoreApplication.translate("help_window", u"Help", None))
         self.text2.setHtml(QCoreApplication.translate("help_window", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

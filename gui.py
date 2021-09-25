@@ -1,20 +1,17 @@
-# -*- coding: utf-8 -*-
+###########################################################
+#  Importy tříd a knihoven 
+###########################################################
 
-################################################################################
-## Form generated from reading UI file 'untitled.ui'
-##
-## Created by: Qt User Interface Compiler version 6.1.3
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
-from PySide6.QtCore import *  # type: ignore
-from PySide6.QtGui import *  # type: ignore
-from PySide6.QtWidgets import *  # type: ignore
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
 from PySide6 import QtWidgets
 from gui_help import Ui_help_window
 
 
+###########################################################
+#  Definice třídy
+###########################################################
 class Ui_main_window(object):
     
     # Metoda pro zobrazení modálního okna nápovědy
@@ -24,6 +21,7 @@ class Ui_main_window(object):
         self.gui_help.setupUi(self.help_window)
         self.help_window.show()
 
+    # Metoda pro sestavení GUI
     def setupUi(self, main_window):
         if not main_window.objectName():
             main_window.setObjectName(u"main_window")
@@ -116,7 +114,7 @@ class Ui_main_window(object):
         self.radio_gk.setLayoutDirection(Qt.LeftToRight)
         self.label_left_defender = QLabel(self.widget_my_team)
         self.label_left_defender.setObjectName(u"label_left_defender")
-        self.label_left_defender.setGeometry(QRect(20, 260, 101, 20))
+        self.label_left_defender.setGeometry(QRect(10, 260, 122, 20))
         sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
@@ -125,13 +123,13 @@ class Ui_main_window(object):
         self.label_left_defender.setAlignment(Qt.AlignCenter)
         self.label_goalkeeper = QLabel(self.widget_my_team)
         self.label_goalkeeper.setObjectName(u"label_goalkeeper")
-        self.label_goalkeeper.setGeometry(QRect(150, 390, 101, 20))
+        self.label_goalkeeper.setGeometry(QRect(140, 390, 122, 20))
         sizePolicy1.setHeightForWidth(self.label_goalkeeper.sizePolicy().hasHeightForWidth())
         self.label_goalkeeper.setSizePolicy(sizePolicy1)
         self.label_goalkeeper.setAlignment(Qt.AlignCenter)
         self.label_left_striker = QLabel(self.widget_my_team)
         self.label_left_striker.setObjectName(u"label_left_striker")
-        self.label_left_striker.setGeometry(QRect(20, 130, 101, 20))
+        self.label_left_striker.setGeometry(QRect(10, 130, 122, 20))
         sizePolicy1.setHeightForWidth(self.label_left_striker.sizePolicy().hasHeightForWidth())
         self.label_left_striker.setSizePolicy(sizePolicy1)
         self.label_left_striker.setAlignment(Qt.AlignCenter)
@@ -142,7 +140,7 @@ class Ui_main_window(object):
         self.radio_rs.setLayoutDirection(Qt.LeftToRight)
         self.label_right_striker = QLabel(self.widget_my_team)
         self.label_right_striker.setObjectName(u"label_right_striker")
-        self.label_right_striker.setGeometry(QRect(270, 130, 121, 20))
+        self.label_right_striker.setGeometry(QRect(260, 130, 141, 20))
         sizePolicy1.setHeightForWidth(self.label_right_striker.sizePolicy().hasHeightForWidth())
         self.label_right_striker.setSizePolicy(sizePolicy1)
         self.label_right_striker.setAlignment(Qt.AlignCenter)
@@ -158,7 +156,7 @@ class Ui_main_window(object):
         self.radio_ld.setLayoutDirection(Qt.LeftToRight)
         self.label_right_defender = QLabel(self.widget_my_team)
         self.label_right_defender.setObjectName(u"label_right_defender")
-        self.label_right_defender.setGeometry(QRect(270, 260, 121, 20))
+        self.label_right_defender.setGeometry(QRect(260, 260, 141, 20))
         sizePolicy1.setHeightForWidth(self.label_right_defender.sizePolicy().hasHeightForWidth())
         self.label_right_defender.setSizePolicy(sizePolicy1)
         self.label_right_defender.setAlignment(Qt.AlignCenter)
@@ -305,6 +303,7 @@ class Ui_main_window(object):
         QMetaObject.connectSlotsByName(main_window)
     # setupUi
 
+    # Metoda pro zakódování textu
     def retranslateUi(self, main_window):
         main_window.setWindowTitle(QCoreApplication.translate("main_window", u"Football Manager by lukazko", None))
         self.action_restart.setText(QCoreApplication.translate("main_window", u"Restart", None))

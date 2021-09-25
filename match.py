@@ -1,13 +1,16 @@
-"""
-Třída pro uchování dat o zápasech 
-
-Atributy:
-
-"""
+###########################################################
+#  Importy tříd a knihoven 
+###########################################################
 
 import random
 
+
+###########################################################
+#  Definice třídy
+###########################################################
 class Match:
+
+    # Inicializační metoda
     def __init__(self, team1, team2, team1_goals = '-', team2_goals = '-', played = 0):
         self.team1 = team1
         self.team2 = team2
@@ -15,9 +18,11 @@ class Match:
         self.team2_goals = team2_goals
         self.played = played
 
+    # Metoda pro získání výsledku daného zápasu
     def get_score(self):
         return str(self.team1_goals) + ':' + str(self.team2_goals)
 
+    # Metoda pro odehrání zápasu a vytvoření výsledku
     def play_match(self):
         if self.played == 1:
             return 'Tento zápas je již odehrán'
@@ -35,7 +40,6 @@ class Match:
             team1_goal_chance = 0.01
         else:
             team1_goal_chance = (team1_oc % team2_dc) / 800
-
         chances = random.randint(10, 20)
         i = 0
         while i < chances:
@@ -50,7 +54,6 @@ class Match:
             team2_goal_chance = 0.01
         else:
             team2_goal_chance = (team2_oc % team1_dc) / 800
-
         chances = random.randint(10, 20)
         i = 0
         while i < chances:
@@ -63,6 +66,7 @@ class Match:
         # Označení zápasu za odehraný
         self.played = 1
 
+        # Vrácení výsledku
         if self.team1_goals > self.team2_goals:
             return 'Vyhrál tým ' + self.team1.name + '. Výsledek ' + self.get_score()
         elif self.team1_goals < self.team2_goals:
