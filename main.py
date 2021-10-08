@@ -192,14 +192,7 @@ def restart():
 
     # Vrácení seznamů do původního stavu
     gui.list_team2_players.clear()
-    gui.list_players.clear()
-    for player in Player.get_instances():
-        gui.list_players.addItem(player.name)
     gui.list_players.setCurrentRow(0)
-    for i in range(gui.list_players.model().rowCount()):
-        actual_row = gui.list_players.item(i)
-        actual_player = next(plr for plr in Player.get_instances() if plr.name == actual_row.text())
-        actual_row.setToolTip('Střela: ' + str(actual_player.shooting) + '\nBránění: ' + str(actual_player.defense) + '\nChytání: ' + str(actual_player.goalkeeping))    
 
     # Výchozí nastavení tlačítek a progress baru    
     gui.button_add.setEnabled(True)
